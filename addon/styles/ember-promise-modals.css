@@ -2,18 +2,96 @@
   overflow: hidden;
 }
 
-.epm-backdrop {
+.epm-backdrop,
+.epm-modal {
   position: fixed;
-  left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(61, 65, 77, 0.8);
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.epm-backdrop {
+  background-color: var(--epm-backdrop-background, #2d3748);
+  opacity: var(--epm-backdrop-opacity, 0.8);
+  animation: var(--epm-backdrop-in, epm-backdrop-in var(--in-duration, 0.3s));
+}
+
+.epm-out > .epm-backdrop {
+  opacity: 0;
+  animation: var(--epm-backdrop-out, epm-backdrop-out var(--out-duration, 0.2s));
+  pointer-events: none;
 }
 
 .epm-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--epm-container-padding, 1rem);
+  overflow: auto;
+  pointer-events: none;
+  animation: var(--epm-modal-in, epm-modal-in var(--in-duration, 0.3s) ease-out);
+  -webkit-overflow-scrolling: touch; /* momentum-based scrolling for Safari on iOS */
+}
+
+.epm-out > .epm-modal {
+  opacity: 0;
+  transform: translate(0, -40vh) scale(0.8);
+  animation: var(--epm-modal-out, epm-modal-out var(--out-duration, 0.2s) ease-out);
+  pointer-events: none;
+}
+
+.epm-modal > * {
+  margin: auto;
+  pointer-events: auto;
+}
+
+@keyframes epm-backdrop-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: var(--epm-backdrop-opacity, 0.8);
+  }
+}
+
+@keyframes epm-backdrop-out {
+  0% {
+    opacity: var(--epm-backdrop-opacity, 0.8);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes epm-modal-in {
+  0% {
+    opacity: 0;
+    transform: translate(0, -40vh) scale(1.2);
+  }
+  72% {
+    opacity: 1;
+    transform: translate(0, 2vh) scale(0.98);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes epm-modal-out {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  95% {
+    opacity: 0;
+    transform: translate(0, -40vh) scale(0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --in-duration: 0.001;
+    --out-duration: 0.001;
+  }
 }
