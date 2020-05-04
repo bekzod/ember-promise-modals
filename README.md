@@ -18,13 +18,19 @@ ember install ember-promise-modals
 
 ## Usage
 
-To use EPM in your project, you first need to inject the `modals` service:
+To use EPM in your project, add the target for the modals to your `application.hbs`:
+
+```hbs
+<EpmModalContainer />
+```
+
+Then you need to inject the `modals` service whereever you need to open a modal:
 
 ```javascript
 @service modals;
 ```
 
-Then, call the `open` method with a component name to render it as a modal:
+Now you can call the `open` method with a component name to render it as a modal:
 
 ```javascript
 this.modals.open('component-to-render');
@@ -94,12 +100,28 @@ order to trigger the "close modal" action. It can be called like so:
 this.close(); // or this.args.close() in Glimmer components
 ```
 
+## Animation
 
+This addon uses CSS animations. You can either replace the [styles of this addon](./addon/styles/ember-promise-modals.css) with your own or adjust the defaults using CSS custom properties in your `:root{}` declaration or in the CSS of any parent container of `<EpmModalContainer />`.
 
+Available properties include these default:
 
+```css
+:root {
+  --epm-container-padding: 1rem;
+  --epm-backdrop-opacity: 0.8;
+  --in-duration: 0.3s;
+  --out-duration: 0.2s;
+  --epm-backdrop-in: epm-backdrop-in var(--in-duration);
+  --epm-modal-in: epm-modal-in var(--in-duration);
+  --epm-backdrop-out: epm-backdrop-out var(--out-duration);
+  --epm-modal-out: epm-modal-out var(--out-duration);
+}
 ```
 
+The addons CSS is run through PostCSS by default, which will create static fallbacks for all custom properties.
 
+TODO: Disable this behavior if the project includes PostCSS and PostCSS default env on its own.
 
 ## Accessibility
 
