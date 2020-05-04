@@ -1,5 +1,33 @@
 'use strict';
 
+const funnel = require('broccoli-funnel');
+const mergeTrees = require('broccoli-merge-trees');
+const broccoliPostCSS = require('broccoli-postcss');
+const PresetEnv = require('postcss-preset-env');
+
 module.exports = {
   name: require('./package').name,
+
+  treeForAddon() {
+    let tree = this._super(...arguments);
+
+    const addonWithoutStyles = funnel(tree, {
+      exclude: ['**/*.css'],
+    });
+
+    const addonStyles = funnel(tree, {
+      include: ['ember-promise-modals.css'],
+    });
+
+    let processedStyles = broccoliPostCSS(addonStyles, {
+      plugins: [
+        PresetEnv({
+          stage: 3,
+          overrideBrowserslist: this.app.project._targets.browsers,
+        }),
+      ],
+    });
+
+    return mergeTrees([addonWithoutStyles, processedStyles]);
+  },
 };
