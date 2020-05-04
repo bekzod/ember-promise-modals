@@ -19,8 +19,8 @@ export default Service.extend({
     this._onLastModalRemoved();
   },
 
-  open(name, data) {
-    let modal = new Modal(this, name, data);
+  open(name, data, options) {
+    let modal = new Modal(this, name, data, options);
 
     this._stack.pushObject(modal);
 

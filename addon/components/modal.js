@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { readOnly } from '@ember/object/computed';
 import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 
@@ -8,12 +9,14 @@ import layout from '../templates/components/modal';
 
 export default Component.extend({
   layout,
-  classNames: ['epm-modal'],
+  classNameBindings: [':epm-modal', 'optionsClassName'],
   outAnimationName: 'epm-modal-out',
   outAnimationClass: 'epm-out',
   result: undefined,
 
   modals: service(),
+
+  optionsClassName: readOnly('modal._options.className'),
 
   didInsertElement() {
     this._super(...arguments);

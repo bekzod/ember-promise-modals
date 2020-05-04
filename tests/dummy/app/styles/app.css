@@ -1,8 +1,76 @@
-.modal1 {
+div.modal1 {
   width: 600px;
   max-width: 100%;
   border-radius: 6px;
   background-color: white;
   box-shadow: 0 4px 28px 0 rgba(0, 0, 0, 0.36);
   padding: 16px 32px;
+}
+
+.from-bottom {
+  animation: from-bottom-in 0.2s;
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.from-top {
+  animation: from-top-in 0.2s;
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.epm-out .from-top {
+  animation: from-top-out 0.2s;
+  opacity: 0;
+  transform: translate(0, 100%);
+}
+
+.epm-out .from-bottom {
+  animation: from-bottom-out 0.2s;
+  opacity: 0;
+  transform: translate(0, 100%);
+}
+
+@keyframes from-bottom-in {
+  0% {
+    opacity: 0;
+    transform: translate(0, 100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes from-bottom-out {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 100%);
+  }
+}
+
+@keyframes from-top-in {
+  0% {
+    opacity: 0;
+    transform: translate(0, -100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes from-top-out {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, -100%);
+  }
 }

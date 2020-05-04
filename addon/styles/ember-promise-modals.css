@@ -17,12 +17,6 @@
   animation: var(--epm-backdrop-in, epm-backdrop-in var(--in-duration, 0.3s));
 }
 
-.epm-out > .epm-backdrop {
-  opacity: 0;
-  animation: var(--epm-backdrop-out, epm-backdrop-out var(--out-duration, 0.2s));
-  pointer-events: none;
-}
-
 .epm-modal {
   display: flex;
   justify-content: center;
@@ -32,6 +26,12 @@
   pointer-events: none;
   animation: var(--epm-modal-in, epm-modal-in var(--in-duration, 0.3s) ease-out);
   -webkit-overflow-scrolling: touch; /* momentum-based scrolling for Safari on iOS */
+}
+
+.epm-out > .epm-backdrop {
+  opacity: 0;
+  animation: var(--epm-backdrop-out, epm-backdrop-out var(--out-duration, 0.2s));
+  pointer-events: none;
 }
 
 .epm-out > .epm-modal {
