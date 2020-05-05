@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { readOnly } from '@ember/object/computed';
-import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 
 import createFocusTrap from 'focus-trap';
@@ -9,8 +8,8 @@ import layout from '../templates/components/modal';
 
 export default Component.extend({
   layout,
-  classNameBindings: [':epm-modal', 'optionsClassName'],
-  outAnimationName: 'epm-modal-out',
+  classNames: ['epm-modal'],
+  classNameBindings: ['optionsClassName'],
   outAnimationClass: 'epm-out',
   result: undefined,
 
@@ -39,14 +38,14 @@ export default Component.extend({
     this.focusTrap.activate();
 
     this.fadeOutEnd = ({ target, animationName }) => {
-      if (target !== this.element || animationName !== this.outAnimationName) {
-        return;
+      if (target !== this.element || animationName.substring(animationName.length - 4) !== '-out') {
+        return true;
       }
 
-      next(() => {
-        this.modal.close(this.result);
-        this.element.parentElement.classList.remove(this.outAnimationClass);
-      });
+      this.modal.close(this.result);
+      this.element.parentElement.classList.remove(this.outAnimationClass);
+
+      return true;
     };
 
     this.element.addEventListener('animationend', this.fadeOutEnd);
