@@ -119,6 +119,26 @@ Available properties include these default:
 }
 ```
 
+### Custom animations
+
+To override the animation for a specific modal, an `options` object containing a custom `className` can be handed to the `.open()` method.
+
+```javascript
+this.modals.open(
+  'file-preview',
+  {
+    fileUrl: this.fileUrl,
+  },
+  {
+    className: 'custom-modal',
+  },
+);
+```
+
+The CSS animations which are applied by the the custom CSS class _must_ end in `-out` to make the animations trigger the modal removal. To ensure proper behavior, a `timeout` option is avaialble as well which will remove the modal directly. The default timeout can be adjusted on the `modals` service using the `outAnimationTimeout` property. The timeout will be set to `0` in tests.
+
+### CSS Variables
+
 The addons CSS is run through PostCSS by default, which will create static fallbacks for all custom properties.
 
 TODO: Disable this behavior if the project includes PostCSS and PostCSS default env on its own.

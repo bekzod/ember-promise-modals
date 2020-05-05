@@ -1,5 +1,6 @@
 import Component from '@ember/component';
-import { readOnly } from '@ember/object/computed';
+import { or, readOnly } from '@ember/object/computed';
+import { later, cancel } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 
 import createFocusTrap from 'focus-trap';
@@ -15,6 +16,7 @@ export default Component.extend({
 
   modals: service(),
 
+  outAnimationTimeout: or('modal._service.outAnimationTimeout', 'modal._options.timeout'),
   optionsClassName: readOnly('modal._options.className'),
 
   didInsertElement() {
@@ -39,13 +41,10 @@ export default Component.extend({
 
     this.fadeOutEnd = ({ target, animationName }) => {
       if (target !== this.element || animationName.substring(animationName.length - 4) !== '-out') {
-        return true;
+        return;
       }
 
-      this.modal.close(this.result);
-      this.element.parentElement.classList.remove(this.outAnimationClass);
-
-      return true;
+      this.removeModal();
     };
 
     this.element.addEventListener('animationend', this.fadeOutEnd);
@@ -65,8 +64,19 @@ export default Component.extend({
   },
 
   closeModal(result) {
+    this._timeout = later(() => {
+      this.removeModal();
+    }, this.outAnimationTimeout);
+
     this.set('result', result);
     this.element.parentElement.classList.add(this.outAnimationClass);
+  },
+
+  removeModal() {
+    cancel(this._timeout);
+
+    this.modal.close(this.result);
+    this.element.parentElement.classList.remove(this.outAnimationClass);
   },
 
   actions: {

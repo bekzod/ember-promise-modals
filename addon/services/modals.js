@@ -9,6 +9,7 @@ export default Service.extend({
   top: alias('_stack.lastObject'),
 
   clickOutsideDeactivates: true,
+  outAnimationTimeout: 200,
 
   init() {
     this._super(...arguments);

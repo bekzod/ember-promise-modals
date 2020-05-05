@@ -6,10 +6,11 @@ import Component from '@ember/component';
 
 import hbs from 'htmlbars-inline-precompile';
 
-import cssAnimationsSettled from '../helpers/css-animations-settled';
+import setupPromiseModals from '../helpers/setup-promise-modals';
 
 module('Component | ModalContainer', function (hooks) {
   setupRenderingTest(hooks);
+  setupPromiseModals(hooks);
 
   test('renders the modals for the `modals` service', async function (assert) {
     this.owner.register(
@@ -26,8 +27,8 @@ module('Component | ModalContainer', function (hooks) {
     assert.dom(this.element).hasText('');
 
     let modals = this.owner.lookup('service:modals');
-
     let modal = modals.open('foo', { bar: 'baz' });
+
     await settled();
 
     assert.dom('.epm-backdrop').exists();
@@ -36,7 +37,6 @@ module('Component | ModalContainer', function (hooks) {
 
     modal.close();
 
-    await cssAnimationsSettled(/-out$/, '.epm-modal');
     await settled();
 
     assert.dom('.epm-backdrop').doesNotExist();

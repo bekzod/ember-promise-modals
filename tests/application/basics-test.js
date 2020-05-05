@@ -2,10 +2,11 @@ import { visit, click, triggerKeyEvent } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
-import cssAnimationsSettled from '../helpers/css-animations-settled';
+import setupPromiseModals from '../helpers/setup-promise-modals';
 
 module('Application | basics', function (hooks) {
   setupApplicationTest(hooks);
+  setupPromiseModals(hooks);
 
   test('clicking the backdrop closes the modal', async function (assert) {
     await visit('/');
@@ -19,8 +20,6 @@ module('Application | basics', function (hooks) {
     assert.dom('.epm-modal').exists();
 
     await click('.epm-backdrop');
-
-    await cssAnimationsSettled(/-out$/, '.epm-modal');
 
     assert.dom('.epm-backdrop').doesNotExist();
     assert.dom('.epm-modal').doesNotExist();
@@ -53,7 +52,6 @@ module('Application | basics', function (hooks) {
     assert.dom('body', document).hasStyle({ overflow: 'hidden' });
 
     await click('.epm-backdrop');
-    await cssAnimationsSettled(/-out$/, '.epm-modal');
 
     assert.dom('body', document).hasStyle({ overflow: 'visible' });
   });
@@ -67,7 +65,6 @@ module('Application | basics', function (hooks) {
     assert.dom('.epm-modal').exists();
 
     await triggerKeyEvent(document, 'keydown', 'Escape');
-    await cssAnimationsSettled(/-out$/, '.epm-modal');
 
     assert.dom('.epm-modal').doesNotExist();
   });
