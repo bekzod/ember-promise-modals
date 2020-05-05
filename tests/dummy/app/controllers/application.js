@@ -7,8 +7,8 @@ export default Controller.extend({
   flip: false,
 
   actions: {
-    showModal() {
-      this.modals.open('modal1', undefined, { className: this.flip ? 'from-top' : 'from-bottom' });
+    showModal(options) {
+      this.modals.open('modal1', undefined, options);
       this.toggleProperty('flip');
     },
   },
