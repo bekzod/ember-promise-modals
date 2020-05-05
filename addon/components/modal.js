@@ -70,6 +70,10 @@ export default Component.extend({
 
     this.set('result', result);
     this.element.parentElement.classList.add(this.outAnimationClass);
+
+    if (this.focusTrap) {
+      this.focusTrap.deactivate({ onDeactivate: null });
+    }
   },
 
   removeModal() {
