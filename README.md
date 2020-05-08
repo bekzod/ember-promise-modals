@@ -141,7 +141,22 @@ The CSS animations which are applied by the the custom CSS class _must_ end in `
 
 The addons CSS is run through PostCSS by default, which will create static fallbacks for all custom properties.
 
-TODO: Disable this behavior if the project includes PostCSS and PostCSS default env on its own.
+If your application uses PostCSS by itself, you can set `excludeCSS` to `true` inside your `ember-cli-build.js`:
+
+```js
+let app = new EmberAddon(defaults, {
+  // Add options here
+  'ember-promise-modals': {
+    excludeCSS: true,
+  },
+});
+```
+
+Done that, you can use [postcss-import](https://github.com/postcss/postcss-import) to import the uncompiled addon styles in your projects `app/styles/app.css`:
+
+```css
+@import 'ember-promise-modals';
+```
 
 ## Accessibility
 

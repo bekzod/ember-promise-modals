@@ -14,6 +14,7 @@ module.exports = {
     let tree = this._super(...arguments);
     let app = this._findHost();
     let options = typeof app.options === 'object' ? app.options : {};
+
     let addonConfig = options[pkg.name] || {};
 
     const addonWithoutStyles = funnel(tree, {
@@ -21,7 +22,7 @@ module.exports = {
     });
 
     if (addonConfig.excludeCSS) {
-      return tree;
+      return addonWithoutStyles;
     }
 
     const addonStyles = funnel(tree, {

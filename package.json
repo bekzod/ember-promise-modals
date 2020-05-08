@@ -12,6 +12,7 @@
     "doc": "doc",
     "test": "tests"
   },
+  "style": "addon/styles/ember-promise-modals.css",
   "scripts": {
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",

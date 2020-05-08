@@ -91,7 +91,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --in-duration: 0.001;
-    --out-duration: 0.001;
+    --in-duration: 0;
+    --out-duration: 0;
   }
 }
