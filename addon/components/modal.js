@@ -40,7 +40,11 @@ export default Component.extend({
     this.focusTrap.activate();
 
     this.fadeOutEnd = ({ target, animationName }) => {
-      if (target !== this.element || animationName.substring(animationName.length - 4) !== '-out') {
+      if (
+        target !== this.element ||
+        (this.modal._options.animationName && this.modal._options.animationName !== animationName) ||
+        animationName.substring(animationName.length - 4) !== '-out'
+      ) {
         return;
       }
 
