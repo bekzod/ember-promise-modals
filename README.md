@@ -102,26 +102,34 @@ this.close(); // or this.args.close() in Glimmer components
 
 ## Animation
 
-This addon uses CSS animations. You can either replace the [styles of this addon](./addon/styles/ember-promise-modals.css) with your own or adjust the defaults using CSS custom properties in your `:root{}` declaration or in the CSS of any parent container of `<EpmModalContainer />`.
+This addon uses CSS animations. You can either replace the
+[styles of this addon](./addon/styles/ember-promise-modals.css) with your own
+or adjust the defaults using CSS custom properties in your `:root{}`
+declaration or in the CSS of any parent container of `<EpmModalContainer />`.
 
 Available properties include these default:
 
 ```css
 :root {
   --epm-container-padding: 1rem;
+  --epm-backdrop-background: #2d3748;
   --epm-backdrop-opacity: 0.8;
   --in-duration: 0.3s;
   --out-duration: 0.2s;
   --epm-backdrop-in: epm-backdrop-in var(--in-duration);
-  --epm-modal-in: epm-modal-in var(--in-duration);
   --epm-backdrop-out: epm-backdrop-out var(--out-duration);
+  --epm-modal-in: epm-modal-in var(--in-duration);
   --epm-modal-out: epm-modal-out var(--out-duration);
 }
 ```
 
+By default, the animations are dropped when `prefers-reduced-motion` is
+detected.
+
 ### Custom animations
 
-To override the animation for a specific modal, an `options` object containing a custom `className` can be handed to the `.open()` method.
+To override the animation for a specific modal, an `options` object containing
+a custom `className` can be handed to the `.open()` method.
 
 ```javascript
 this.modals.open(
@@ -130,18 +138,63 @@ this.modals.open(
     fileUrl: this.fileUrl,
   },
   {
+    // custom class, see below for example
     className: 'custom-modal',
+    // optional: name the animation triggered by the custom css class
+    //           animations ending in "-out" are detected by default!
+    animation: 'custom-animation-name-out',
+    // optional: adjust the timeout for the out animation
+    timeout: 300,
   },
 );
 ```
 
-The CSS animations which are applied by the the custom CSS class _must_ end in `-out` to make the animations trigger the modal removal. To ensure proper behavior, a `timeout` option is avaialble as well which will remove the modal directly. The default timeout can be adjusted on the `modals` service using the `outAnimationTimeout` property. The timeout will be set to `0` in tests.
+```css
+.custom-modal {
+  animation: custom-animation-in 0.5s;
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* 
+  The `.epm-out` class is added to the parent of the modal when the modal 
+  should be closed, which triggers the animation
+*/
+.epm-out .custom-modal {
+  animation: custom-animation-name-out 0.2s; /* default out animation is 2s */
+  opacity: 0;
+  transform: translate(0, 100%);
+}
+
+/* 
+  animation name has to end in "-out" to be detected by the custom animationend 
+  event handler 
+*/
+@keyframes custom-animation-name-out {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 100%);
+  }
+}
+```
+
+The CSS animations which are applied by the the custom CSS class _must_ end in
+`-out` to make the animations trigger the modal removal. To ensure proper
+behavior, a `timeout` option is avaialble as well which will remove the modal
+directly. The default timeout can be adjusted on the `modals` service using the
+`outAnimationTimeout` property. The timeout will be set to `0` in tests.
 
 ### CSS Variables
 
-The addons CSS is run through PostCSS by default, which will create static fallbacks for all custom properties.
+The addons CSS is run through PostCSS by default, which will create static
+fallbacks for all custom properties using their defaults.
 
-If your application uses PostCSS by itself, you can set `excludeCSS` to `true` inside your `ember-cli-build.js`:
+If your application uses PostCSS by itself, you can set `excludeCSS` to `true`
+inside your `ember-cli-build.js`:
 
 ```js
 let app = new EmberAddon(defaults, {
@@ -152,7 +205,8 @@ let app = new EmberAddon(defaults, {
 });
 ```
 
-Done that, you can use [postcss-import](https://github.com/postcss/postcss-import) to import the uncompiled addon styles in your projects `app/styles/app.css`:
+Done that, you can use [postcss-import](https://github.com/postcss/postcss-import)
+to import the uncompiled addon styles in your projects `app/styles/app.css`:
 
 ```css
 @import 'ember-promise-modals';
