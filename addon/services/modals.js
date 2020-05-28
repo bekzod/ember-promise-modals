@@ -17,12 +17,13 @@ export default Service.extend({
     this._stack = A([]);
 
     let outAnimationTimeout = this.outAnimationTimeout;
+    let mediaQuery = matchMedia('(prefers-reduced-motion: reduce)');
     let mediaQueryCallback = () => {
       set(this, 'outAnimationTimeout', this._matchMedia.matches ? 0 : outAnimationTimeout);
     };
 
-    this._matchMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
-    this._matchMedia.addEventListener('change', mediaQueryCallback);
+    mediaQuery.addListener(mediaQueryCallback);
+    this._matchMedia = mediaQuery;
 
     mediaQueryCallback();
   },

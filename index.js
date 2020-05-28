@@ -21,15 +21,15 @@ module.exports = {
       exclude: ['**/*.css'],
     });
 
-    if (addonConfig.excludeCSS) {
+    if (addonConfig.excludeCSS === true) {
       return addonWithoutStyles;
     }
 
     const addonStyles = funnel(tree, {
-      include: ['ember-promise-modals.css'],
+      include: ['**/*.css'],
     });
 
-    let processedStyles = broccoliPostCSS(addonStyles, {
+    const processedStyles = broccoliPostCSS(addonStyles, {
       plugins: [
         PresetEnv({
           stage: 3,

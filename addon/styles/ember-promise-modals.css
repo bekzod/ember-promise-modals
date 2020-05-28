@@ -1,3 +1,24 @@
+:root {
+  --epm-animation-in-duration: 0.3s;
+  --epm-animation-out-duration: 0.18s;
+  --epm-animation-in-name: epm-backdrop-in;
+  --epm-animation-out-name: epm-backdrop-out;
+  --epm-animation-backdrop-in: var(--epm-animation-in-name) var(--epm-animation-in-duration);
+  --epm-animation-backdrop-out: var(--epm-animation-out-name) var(--epm-animation-out-duration);
+  --epm-animation-modal-in: epm-modal-in var(--epm-animation-in-duration) ease-out;
+  --epm-animation-modal-out: epm-modal-out var(--epm-animation-out-duration) ease-out;
+  --epm-backdrop-background: #2d3748;
+  --epm-backdrop-opacity: 0.8;
+  --epm-container-padding: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --epm-animation-in-duration: 0;
+    --epm-animation-out-duration: 0;
+  }
+}
+
 .epm-scrolling-disabled {
   overflow: hidden;
 }
@@ -12,32 +33,32 @@
 }
 
 .epm-backdrop {
-  background-color: var(--epm-backdrop-background, #2d3748);
-  opacity: var(--epm-backdrop-opacity, 0.8);
-  animation: var(--epm-backdrop-in, epm-backdrop-in var(--in-duration, 0.3s));
+  background-color: var(--epm-backdrop-background);
+  opacity: var(--epm-backdrop-opacity);
+  animation: var(--epm-animation-backdrop-in);
 }
 
 .epm-modal {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--epm-container-padding, 1rem);
+  padding: var(--epm-container-padding);
   overflow: auto;
-  animation: var(--epm-modal-in, epm-modal-in var(--in-duration, 0.3s) ease-out);
+  animation: var(--epm-animation-modal-in);
   pointer-events: none;
   -webkit-overflow-scrolling: touch; /* momentum-based scrolling for Safari on iOS */
 }
 
-.epm-out > .epm-backdrop {
+.epm-backdrop.epm-out {
   opacity: 0;
-  animation: var(--epm-backdrop-out, epm-backdrop-out var(--out-duration, 0.2s));
+  animation: var(--epm-animation-backdrop-out);
   pointer-events: none;
 }
 
-.epm-out > .epm-modal {
+.epm-modal.epm-out {
   transform: translate(0, -10vh) scale(0.8);
   opacity: 0;
-  animation: var(--epm-modal-out, epm-modal-out var(--out-duration, 0.2s) ease-out);
+  animation: var(--epm-animation-modal-out);
   pointer-events: none;
 }
 
@@ -51,13 +72,13 @@
     opacity: 0;
   }
   100% {
-    opacity: var(--epm-backdrop-opacity, 0.8);
+    opacity: var(--epm-backdrop-opacity);
   }
 }
 
 @keyframes epm-backdrop-out {
   0% {
-    opacity: var(--epm-backdrop-opacity, 0.8);
+    opacity: var(--epm-backdrop-opacity);
   }
   100% {
     opacity: 0;
@@ -86,12 +107,5 @@
   95% {
     transform: translate(0, -10vh) scale(0.8);
     opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --in-duration: 0;
-    --out-duration: 0;
   }
 }

@@ -12,7 +12,6 @@ ember-promise-modals provides a way to render and handle modals in Ember.js apps
 ## Installation
 
 ```
-ember install ember-animated
 ember install ember-promise-modals
 ```
 
@@ -24,7 +23,7 @@ To use EPM in your project, add the target for the modals to your `application.h
 <EpmModalContainer />
 ```
 
-Then you need to inject the `modals` service whereever you need to open a modal:
+Then you need to inject the `modals` service wherever you need to open a modal:
 
 ```javascript
 @service modals;
@@ -107,21 +106,7 @@ This addon uses CSS animations. You can either replace the
 or adjust the defaults using CSS custom properties in your `:root{}`
 declaration or in the CSS of any parent container of `<EpmModalContainer />`.
 
-Available properties include these default:
-
-```css
-:root {
-  --epm-container-padding: 1rem;
-  --epm-backdrop-background: #2d3748;
-  --epm-backdrop-opacity: 0.8;
-  --in-duration: 0.3s;
-  --out-duration: 0.2s;
-  --epm-backdrop-in: epm-backdrop-in var(--in-duration);
-  --epm-backdrop-out: epm-backdrop-out var(--out-duration);
-  --epm-modal-in: epm-modal-in var(--in-duration);
-  --epm-modal-out: epm-modal-out var(--out-duration);
-}
-```
+Available properties and their defaults can be found in the `:root {}` block inside the addons css.
 
 By default, the animations are dropped when `prefers-reduced-motion` is
 detected.
@@ -160,7 +145,7 @@ this.modals.open(
   The `.epm-out` class is added to the parent of the modal when the modal 
   should be closed, which triggers the animation
 */
-.epm-out .custom-modal {
+.custom-modal.epm-out {
   animation: custom-animation-name-out 0.2s; /* default out animation is 2s */
   opacity: 0;
   transform: translate(0, 100%);
@@ -182,7 +167,7 @@ this.modals.open(
 }
 ```
 
-The CSS animations which are applied by the the custom CSS class _must_ end in
+The CSS animations which are applied by the custom CSS class _must_ end in
 `-out` to make the animations trigger the modal removal. To ensure proper
 behavior, a `timeout` option is avaialble as well which will remove the modal
 directly. The default timeout can be adjusted on the `modals` service using the

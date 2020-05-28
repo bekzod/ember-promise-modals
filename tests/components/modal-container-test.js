@@ -22,7 +22,7 @@ module('Component | ModalContainer', function (hooks) {
 
     await render(hbs`<EpmModalContainer />`);
 
-    assert.dom('.epm-backdrop').doesNotExist();
+    assert.dom('.epm-backdrop').exists();
     assert.dom('.epm-modal').doesNotExist();
     assert.dom(this.element).hasText('');
 
@@ -31,7 +31,6 @@ module('Component | ModalContainer', function (hooks) {
 
     await settled();
 
-    assert.dom('.epm-backdrop').exists();
     assert.dom('.epm-modal').exists({ count: 1 });
     assert.dom('.epm-modal').hasText('foo baz');
 
@@ -39,7 +38,6 @@ module('Component | ModalContainer', function (hooks) {
 
     await settled();
 
-    assert.dom('.epm-backdrop').doesNotExist();
     assert.dom('.epm-modal').doesNotExist();
     assert.dom(this.element).hasText('');
   });

@@ -10,7 +10,7 @@ import layout from '../templates/components/modal';
 export default Component.extend({
   layout,
   classNames: ['epm-modal'],
-  classNameBindings: ['optionsClassName'],
+  classNameBindings: ['optionsClassName', 'animatingOutClass'],
   outAnimationClass: 'epm-out',
   result: undefined,
 
@@ -40,11 +40,11 @@ export default Component.extend({
     this.focusTrap.activate();
 
     this.fadeOutEnd = ({ target, animationName }) => {
-      if (
-        target !== this.element ||
-        (this.modal._options.animationName && this.modal._options.animationName !== animationName) ||
-        animationName.substring(animationName.length - 4) !== '-out'
-      ) {
+      let isntTarget = target !== this.element;
+      let wrongAnimation = this.modal._options.animationName && this.modal._options.animationName !== animationName;
+      let animationEndsWrong = animationName.substring(animationName.length - 4) !== '-out';
+
+      if (isntTarget || wrongAnimation || animationEndsWrong) {
         return;
       }
 
@@ -52,7 +52,7 @@ export default Component.extend({
     };
 
     this.element.addEventListener('animationend', this.fadeOutEnd);
-    this.element.parentElement.classList.remove(this.outAnimationClass);
+    this.set('animatingOutClass', '');
   },
 
   willDestroyElement() {
@@ -61,7 +61,7 @@ export default Component.extend({
     }
 
     if (this.fadeOutEnd) {
-      this.element.removeEventListener(this.fadeOutEnd);
+      this.element.removeEventListener('animationend', this.fadeOutEnd);
     }
 
     this._super(...arguments);
@@ -73,7 +73,7 @@ export default Component.extend({
     }, this.outAnimationTimeout);
 
     this.set('result', result);
-    this.element.parentElement.classList.add(this.outAnimationClass);
+    this.set('animatingOutClass', this.outAnimationClass);
 
     if (this.focusTrap) {
       this.focusTrap.deactivate({ onDeactivate: null });
@@ -84,7 +84,8 @@ export default Component.extend({
     cancel(this._timeout);
 
     this.modal.close(this.result);
-    this.element.parentElement.classList.remove(this.outAnimationClass);
+
+    this.set('animatingOutClass', '');
   },
 
   actions: {
