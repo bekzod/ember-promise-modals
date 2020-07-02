@@ -6,5 +6,7 @@
 ></div>
 
 {{#each this.modals._stack as |modal|}}
-  <EpmModal @modal={{modal}} />
+  <div class="epm-modal-container">
+    <EpmModal @modal={{modal}} />
+  </div>
 {{/each}}

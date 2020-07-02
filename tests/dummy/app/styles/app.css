@@ -22,19 +22,19 @@
 .from-top.epm-out {
   animation: from-top-out 0.2s;
   opacity: 0;
-  transform: translate(0, 100%);
+  transform: translate(0, 100vh);
 }
 
 .from-bottom.epm-out {
   animation: from-bottom-out 0.2s;
   opacity: 0;
-  transform: translate(0, 100%);
+  transform: translate(0, 100vh);
 }
 
 @keyframes from-bottom-in {
   0% {
     opacity: 0;
-    transform: translate(0, 100%);
+    transform: translate(0, 100vh);
   }
   100% {
     opacity: 1;
@@ -49,14 +49,14 @@
   }
   100% {
     opacity: 0;
-    transform: translate(0, 100%);
+    transform: translate(0, 100vh);
   }
 }
 
 @keyframes from-top-in {
   0% {
     opacity: 0;
-    transform: translate(0, -100%);
+    transform: translate(0, -100vh);
   }
   100% {
     opacity: 1;
@@ -71,6 +71,6 @@
   }
   100% {
     opacity: 0;
-    transform: translate(0, -100%);
+    transform: translate(0, -100vh);
   }
 }
