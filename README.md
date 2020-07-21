@@ -208,6 +208,20 @@ EPM will ensure to [focus the first "tabbable element" by default](https://www.w
 If no focusable element is present, focus will be applied on the currently
 visible modal amber-auto-generated container.
 
+## Testing
+
+This addon provides a test helper function that reduces the animation duration to zero to speed up your tests.
+
+```js
+import { setupPromiseModals } from 'ember-promise-modals/test-support';
+
+module('Application | ...', function (hooks) {
+  // ...
+  setupPromiseModals(hooks);
+  // ...
+});
+```
+
 ## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.

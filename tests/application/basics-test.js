@@ -2,7 +2,7 @@ import { visit, click, triggerKeyEvent } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
-import setupPromiseModals from '../helpers/setup-promise-modals';
+import { setupPromiseModals } from 'ember-promise-modals/test-support';
 
 module('Application | basics', function (hooks) {
   setupApplicationTest(hooks);
