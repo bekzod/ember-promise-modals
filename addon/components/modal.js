@@ -40,6 +40,8 @@ export default Component.extend({
     this.focusTrap.activate();
 
     this.fadeOutEnd = ({ target, animationName }) => {
+      this.modals._onModalAnimationEnd();
+
       let isntTarget = target !== this.element;
       let wrongAnimation = this.modal._options.animationName && this.modal._options.animationName !== animationName;
       let animationEndsWrong = animationName.substring(animationName.length - 4) !== '-out';
@@ -51,6 +53,7 @@ export default Component.extend({
       this.removeModal();
     };
 
+    this.modals._onModalAnimationStart();
     this.element.addEventListener('animationend', this.fadeOutEnd);
     this.set('animatingOutClass', '');
   },

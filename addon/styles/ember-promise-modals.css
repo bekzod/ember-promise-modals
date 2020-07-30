@@ -46,6 +46,10 @@
   overflow: auto;
 }
 
+.epm-animating .epm-modal-container {
+  overflow: hidden;
+}
+
 .epm-modal {
   margin: auto;
   animation: var(--epm-animation-modal-in);

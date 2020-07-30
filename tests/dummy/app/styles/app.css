@@ -8,25 +8,25 @@
 }
 
 .from-bottom {
-  animation: from-bottom-in 0.2s;
+  animation: from-bottom-in 0.5s;
   opacity: 1;
   transform: translate(0, 0);
 }
 
 .from-top {
-  animation: from-top-in 0.2s;
+  animation: from-top-in 0.5s;
   opacity: 1;
   transform: translate(0, 0);
 }
 
 .from-top.epm-out {
-  animation: from-top-out 0.2s;
+  animation: from-top-out 0.5s;
   opacity: 0;
   transform: translate(0, 100vh);
 }
 
 .from-bottom.epm-out {
-  animation: from-bottom-out 0.2s;
+  animation: from-bottom-out 0.5s;
   opacity: 0;
   transform: translate(0, 100vh);
 }
@@ -34,7 +34,7 @@
 @keyframes from-bottom-in {
   0% {
     opacity: 0;
-    transform: translate(0, 100vh);
+    transform: translate(0, 100%);
   }
   100% {
     opacity: 1;
@@ -49,14 +49,14 @@
   }
   100% {
     opacity: 0;
-    transform: translate(0, 100vh);
+    transform: translate(0, 100%);
   }
 }
 
 @keyframes from-top-in {
   0% {
     opacity: 0;
-    transform: translate(0, -100vh);
+    transform: translate(0, -100%);
   }
   100% {
     opacity: 1;
@@ -71,6 +71,6 @@
   }
   100% {
     opacity: 0;
-    transform: translate(0, -100vh);
+    transform: translate(0, -100%);
   }
 }

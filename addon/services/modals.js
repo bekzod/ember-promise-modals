@@ -51,4 +51,12 @@ export default Service.extend({
   _onLastModalRemoved() {
     document.body.classList.remove('epm-scrolling-disabled');
   },
+
+  _onModalAnimationStart() {
+    document.body.classList.add('epm-animating');
+  },
+
+  _onModalAnimationEnd() {
+    document.body.classList.remove('epm-animating');
+  },
 });
